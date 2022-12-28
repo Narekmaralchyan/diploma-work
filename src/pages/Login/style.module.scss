@@ -1,5 +1,48 @@
 .loginPage{
   width: 100vw;
   height: 100vh;
-  background-color: #8f3b76;
+background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/75/Mount_Ararat_and_the_Yerevan_skyline_in_spring_%2850mm%29.jpg");
+  background-size: cover;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  color: white;
+    .loginForm{
+      background-color: rgba(13, 23, 42, 0.64);
+      width: 30%;
+      min-width: 270px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .inputs{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        height: 40%;
+        input{
+          height: 40px;
+          outline: none;
+          border-radius: 8px;
+          width: 70%;
+          font-size: 100%;
+          border: none;
+        }
+      }
+      .links{
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .link{
+        font-size: 12px;
+        color: skyblue;
+      }
+    }
 }
+

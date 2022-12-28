@@ -41,7 +41,7 @@ export const universties = [{
 
 export const users = {
     "admin": {
-        "id": "admin", "name": "admin", "mail": "admin@mail.ru", "password": "123456", "isAdmin": true
+        "id": "admin", "name": "admin", "email": "admin@mail.ru", "password": "123456", "isAdmin": true
     },
     "iDlecturer1": {
         "status": "lecturer",
