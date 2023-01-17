@@ -1,9 +1,12 @@
 import React from "react";
+import {Routes,Route} from "react-router-dom";
+import Home from "../pages/home";
+import AdminPage from "../pages/admin";
 
 export default function AuthRoutes(){
     return (
-        <div>
-            Auth page
-        </div>
+        <Routes>
+            <Route path="/" element={<AdminPage/>} />
+        </Routes>
     )
 }

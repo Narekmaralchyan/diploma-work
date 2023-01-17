@@ -2,7 +2,7 @@ interface IUniversity {
     name:string;
     imageURL:string;
     id:string;
-    founded:string;
+    info:string;
     faculties:IFaculty[]
 }
 interface IFaculty{

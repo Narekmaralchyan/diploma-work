@@ -7,7 +7,7 @@ interface IUserState {
 
 const initialState:IUserState = {
     status: 'idle',
-    id: null
+    id: "1"
 };
 
 const userSlice = createSlice({
