@@ -126,15 +126,13 @@
             "degree": "bachelor",
             "department": "Արվեստաբանություն",
             "id": "id1",
-            "admissionYear": 2016,
-            "graduationYear": 0,
+            "course": "4",
             "email": "narek@mail.ru",
             "password": "123456",
             "phone": "+37494050644",
             "avatarURL": "",
             "university": "Երևանի պետական համալսարան",
-            "faculty": "Պատմություն",
-            "state": "active"
+            "faculty": "Պատմություն"
         }
     ]
 }

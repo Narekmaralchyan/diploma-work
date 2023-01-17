@@ -26,14 +26,14 @@ export default function RegisterStudent ({changeSignUp}:IProps){
         university:"",
         faculty:"",
         degree:"",
-        departments:"",
-        admissionYear:""
+        department:"",
+        course:""
 
     });
     const [data,setData] = useState<IData>({
         universities:[],
         faculties:[],
-        degrees:[],
+        degrees:["բակալավր","մագիստրատուրա"],
         departments:[]
     })
 
@@ -53,7 +53,7 @@ export default function RegisterStudent ({changeSignUp}:IProps){
     },[])
     useEffect(()=>{
         if(inputData.university){
-                getUniversityByName(inputData.university)
+            getUniversityByName(inputData.university)
                 .then(university=>{
                     setData({
                         ...data,
@@ -72,30 +72,10 @@ export default function RegisterStudent ({changeSignUp}:IProps){
                 ...inputData,
                 faculty:"",
                 degree:"",
-                departments:""
+                department:""
             })
         }
     },[inputData.university])
-    useEffect(()=>{
-        if(inputData.university && inputData.faculty){
-            setData({
-                ...data,
-                degrees:["բակալավր","մագիստրատուրա"]
-            })
-        }
-        else{
-            setData({
-                ...data,
-                degrees:[],
-                departments:[]
-            })
-            setInputData({
-                ...inputData,
-                degree:"",
-                departments:""
-            })
-        }
-    },[inputData.university,inputData.faculty])
     useEffect(()=>{
         if(inputData.university && inputData.faculty && inputData.degree){
                 getUniversityByName(inputData.university)
@@ -114,7 +94,7 @@ export default function RegisterStudent ({changeSignUp}:IProps){
             })
             setInputData({
                 ...inputData,
-                departments:""
+                department:""
             })
         }
     },[inputData.university,inputData.faculty,inputData.degree])
@@ -127,15 +107,13 @@ export default function RegisterStudent ({changeSignUp}:IProps){
     function signUp(e:FormEvent<HTMLFormElement>){
         e.preventDefault();
         console.log("inputData",inputData)
-        // const newUser = {
-        //     ...inputData,
-        //     status:"lecturer",
-        //     avatarURL:"",
-        //     id:Math.random().toString(),
-        //     isDean:false,
-        //     isRector:false
-        // }
-        // console.log("newUser",newUser);
+        const newUser = {
+            ...inputData,
+            status:"student",
+            avatarURL:"",
+            id:Math.random().toString(),
+        }
+        console.log("newUser",newUser);
     }
 
     return(
@@ -164,7 +142,15 @@ export default function RegisterStudent ({changeSignUp}:IProps){
                     <option value="">բաժին</option>
                     {data.departments.map(department=><option key={department} value={department}>{department}</option>)}
                 </select>
-                <input type='number' onChange={updateState} name="admissionYear" placeholder='ընդունվելու տարեթիվ' />
+                <select onChange={updateState} name="course">
+                    <option value="">կուրս</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
             </div>
             <div className={Style.btn}>
                 <button  className={Style.signUpStudentBtn} onClick={changeSignUp} >Գրանցվել որպես դասախոս</button>
