@@ -5,28 +5,34 @@ import {IUniversity} from "../../types";
 import UniversityItem from "./components/universityItem";
 import btnStyle from './../../styles/buttonStyle.module.scss'
 import AddUniversity from "./components/addUniversity";
+import SelectedUniversity from "./components/selectedUniversity";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {setUniversities} from "../../features/universitiesSlice/universitiesSlice";
 export default function AdminPage(){
-    const [universities,setUniversities] = useState([] as IUniversity[])
+    const universities = useAppSelector(state => state.universities.universities)
+    const dispatch = useAppDispatch()
+    const [showAddUniversityPopUp,setShowAddUniversityPopUp] = useState(false)
 
     useEffect(()=>{
         getAllUniversities()
             .then(data=>{
-                setUniversities(data)
+                dispatch(setUniversities(data))
             })
     },[])
 
+    function handleShowPopUp(){
+        setShowAddUniversityPopUp(prev=>!prev)
+    }
+
+
     return(
         <div className={style.adminPage}>
-            <AddUniversity/>
+            {showAddUniversityPopUp && <AddUniversity closePopUp={handleShowPopUp} />}
             <div className={style.universities}>
-                <>
-                    {universities.map(university=><UniversityItem university={university}/>)}
-                </>
-                <button className={btnStyle.myButton}>Ավելացնել համալսարան</button>
+                {universities.map(university=><UniversityItem key={university.id} university={university} />)}
+                <button className={btnStyle.myButton} onClick={handleShowPopUp}>Ավելացնել համալսարան</button>
             </div>
-            <div className={style.selectedUniversity}>
-
-            </div>
+            <SelectedUniversity  />
         </div>
     )
 }

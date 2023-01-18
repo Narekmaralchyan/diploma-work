@@ -12,5 +12,34 @@ async function getAllUniversities(){
     return universities as IUniversity[]
 }
 
+ async function addUniversityAPI(university:IUniversity){
+    // return getAllUniversities()
+    //     .then(universities=>{
+    //          const exist = universities.map(university=>university.name).includes(university.name);
+    //          if(!exist) {
+    //              fetch("http://localhost:3005/universities", {
+    //                  method: "POST",
+    //                  headers: {
+    //                      'Content-Type': 'application/json',
+    //                  },
+    //                  body: JSON.stringify(university)
+    //              })
+    //          }
+    //     })
+     const universities = await getAllUniversities()
+     if(universities.map(university=>university.name).includes(university.name)){
+         throw new Error("համալսարանը արդեն գոյություն ունի")
+     }
+     else {
+         fetch("http://localhost:3005/universities", {
+             method: "POST",
+             headers: {
+                 'Content-Type': 'application/json',
+             },
+             body: JSON.stringify(university)
+         })
+     }
 
-export {getUniversityByName,getAllUniversities}
+}
+
+export {getUniversityByName,getAllUniversities,addUniversityAPI}

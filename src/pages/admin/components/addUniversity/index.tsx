@@ -1,9 +1,16 @@
 import style from './style.module.scss'
 import React, {ChangeEvent, useEffect, useState} from "react";
 import btnStyle from './../../../../styles/buttonStyle.module.scss'
-import {getAllUniversities} from "../../../../utils/universityAPI";
-export default function AddUniversity(){
+import {addUniversityAPI, getAllUniversities} from "../../../../utils/universityAPI";
+import {IUniversity} from "../../../../types";
+import {useAppDispatch} from "../../../../app/hooks";
+import {addUniversity} from "../../../../features/universitiesSlice/universitiesSlice";
 
+interface IProps {
+    closePopUp:()=>void
+}
+export default function AddUniversity({closePopUp}:IProps){
+    const dispatch = useAppDispatch()
     const [readyToAdd,setReadyToAdd] = useState(false)
     const [state,setState] = useState({
         name:"",
@@ -22,47 +29,39 @@ export default function AddUniversity(){
         })
     }
 
-    function addUniversity(){
-        getAllUniversities()
-            .then(universities=>{
-                const exist = universities.map(university=>university.name).includes(state.name)
-                if(!exist){
-                    const newUniversity = {
-                        name:state.name,
-                        info:state.info,
-                        id:state.name,
-                        faculties:[],
-                    }
-                    fetch("http://localhost:3005/universities",{
-                        method:"POST",
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body:JSON.stringify(newUniversity)
-                    })
-
-                }
-                else throw new Error()
-            })
+    function handleAddBtn(){
+        const newUniversity:IUniversity = {
+            name:state.name,
+            info:state.info,
+            id:state.name,
+            imageURL:"",
+            faculties:[],
+        }
+        addUniversityAPI(newUniversity)
             .then(res=>{
-            console.log("added")
-        })
-            .catch(err=>{
-                console.log("error")
+                dispatch(addUniversity(newUniversity))
+                alert("համալսարանը հաջողությամբ ավելացվեց")
+                closePopUp();
             })
+            .catch(res=>{
+                alert(res);
+                closePopUp();
+            })
+
+
 
     }
     return (
         <div className={style.popUpBackground} >
             <div className={style.popUp}>
                 <h2>Ավելացնել համալսարան</h2>
-                <form onSubmit={addUniversity} className={style.addForm}>
+                <form onSubmit={handleAddBtn} className={style.addForm}>
                     <input placeholder='անուն' name='name' autoComplete="on" type='name' onChange={updateState}/>
                     <textarea placeholder='համալսարանի մասին' name='info' autoComplete="on"  onChange={updateState}/>
                 </form>
                 <div className={style.buttons}>
-                    <button className={btnStyle.myButton}>չեղարկել</button>
-                    <button className={btnStyle.myButton} disabled={!readyToAdd} onClick={addUniversity}>ավելացնել</button>
+                    <button className={btnStyle.myButton} onClick={closePopUp}>չեղարկել</button>
+                    <button className={btnStyle.myButton} disabled={!readyToAdd} onClick={handleAddBtn}>ավելացնել</button>
                 </div>
             </div>
         </div>
