@@ -150,7 +150,7 @@ async function loginAPI (email:string,password:string){
         .then(res=>res.json())
         .then(res=>{
             if(!res.length || res[0].password !== password) {
-                throw new Error("սխալ տվյալներ")
+                throw new Error("սխալ էլ-հասցե կամ գաղտնաբառ")
             }
             else {
                 id = res[0].id

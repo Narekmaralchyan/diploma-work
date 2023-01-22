@@ -36,8 +36,7 @@ export default function Login(){
     return (
         <>
             {status === 'loading' && <Loading/>}
-            {status === 'fail' && alert("սխալ մուտքանուն կամ գաղտնաբառ")}
-        <div className={Style.loginPage}>
+            <div className={Style.loginPage}>
             <form onSubmit={login} className={Style.loginForm}>
                 <h1>Մուտք համակարգ</h1>
                <div className={Style.inputs}>
