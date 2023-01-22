@@ -1,19 +1,23 @@
 
 import style from './../../style.module.scss'
 import {useAppSelector} from "../../../../app/hooks";
+import MainInfo from "../mainInfo";
+import Faculties from "../faculties";
+import SelectedFaculty from "../selectedFaculty";
 
 
 export default function SelectedUniversity(){
-    const {universities,selected} = useAppSelector(state => state.universities)
-    const university = universities.find(universe=>universe.id === selected)
+    const selectedUniversity = useAppSelector(state => state.universities.selectedUniversity)
 
 
     return (
-        university &&
+        selectedUniversity &&
         <div className={style.selectedUniversity}>
-            {university.name}
+            <MainInfo />
+            <Faculties />
+            <SelectedFaculty />
         </div>
         ||
-        <div className={style.selectedUniversity}></div>
+        <div className={style.selectedUniversity}>Ընտրեք համալսարան</div>
     )
 }

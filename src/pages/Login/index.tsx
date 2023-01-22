@@ -2,10 +2,10 @@ import React , { ChangeEvent , FormEvent , useState } from "react";
 import Style from './style.module.scss'
 import { Link } from "react-router-dom";
 import buttonStyle from './../../styles/buttonStyle.module.scss'
-import { users } from "../../data";
 import { useAppDispatch , useAppSelector } from "../../app/hooks";
 import Loading from "../../components/loading";
 import { logIn , setFail , setLoading } from "../../features/userSlice/userSlice";
+import {loginAPI} from "../../utils/universityAPI";
 export default function Login(){
     const {status} = useAppSelector(state=>state.userSlice);
     const dispatch = useAppDispatch();
@@ -22,13 +22,14 @@ export default function Login(){
     function login(e:FormEvent<HTMLFormElement>){
         e.preventDefault();
         dispatch(setLoading());
-        setTimeout(()=>{
-            const user = Object.values(users).find(user=>user.email === state.email && user.password === state.password)
-            if(user){
-                dispatch(logIn(user.id));
-            }
-            else dispatch(setFail());
-        },1000)
+        loginAPI(state.email,state.password)
+            .then( id =>{
+                dispatch(logIn(id))
+            })
+            .catch(error=>{
+                dispatch(setFail());
+                alert(error)
+            })
     }
 
 

@@ -33,7 +33,7 @@ export default function AddUniversity({closePopUp}:IProps){
         const newUniversity:IUniversity = {
             name:state.name,
             info:state.info,
-            id:state.name,
+            id:Math.random().toString(),
             imageURL:"",
             faculties:[],
         }

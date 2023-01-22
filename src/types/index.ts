@@ -48,4 +48,20 @@ interface IEvents{
     eventDate:number;
 }
 
-export type {IUniversity,IFaculty,INews,IComment,IEvents}
+interface IStudent {
+    status:string;
+    name:string;
+    lastName:string;
+    degree:string;
+    department:string;
+    id:string;
+    course:string;
+    email:string;
+    password:string;
+    phone:string;
+    avatarURL:string;
+    university:string;
+    faculty:string;
+}
+
+export type {IUniversity,IFaculty,INews,IComment,IEvents,IStudent}

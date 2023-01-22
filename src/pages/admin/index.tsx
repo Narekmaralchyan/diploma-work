@@ -9,7 +9,7 @@ import SelectedUniversity from "./components/selectedUniversity";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {setUniversities} from "../../features/universitiesSlice/universitiesSlice";
 export default function AdminPage(){
-    const universities = useAppSelector(state => state.universities.universities)
+    const universities = Object.values(useAppSelector(state => state.universities.universities))
     const dispatch = useAppDispatch()
     const [showAddUniversityPopUp,setShowAddUniversityPopUp] = useState(false)
 
