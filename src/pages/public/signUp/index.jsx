@@ -8,7 +8,7 @@ import SForm from "../../../styledComponents/SForm";
 import {Link} from "react-router-dom";
 import {app} from "../../../configs/firebaseConfig";
 import {useDispatch} from "react-redux";
-import {setUser} from "../../../redux/slices/userSlice";
+import {setUserId} from "../../../redux/slices/userSlice";
 
 
 const SignUp = () => {
@@ -20,7 +20,7 @@ const SignUp = () => {
         const auth =getAuth()
        const userData = await createUserWithEmailAndPassword(auth,values.email,values.password)
        const newUser = userData.user
-        dispatch(setUser(newUser.uid))
+        dispatch(setUserId(newUser.uid))
 
        const db = getFirestore(app)
        const docRef = doc(db,'users',newUser.uid)

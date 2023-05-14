@@ -2,7 +2,7 @@ import {getAuth,signInWithEmailAndPassword} from "firebase/auth";
 import {Button, Col, Form, Input, Layout, Row} from "antd";
 import {useForm} from "antd/es/form/Form";
 import {useDispatch} from "react-redux";
-import {setUser} from "../../../redux/slices/userSlice";
+import {setUserId} from "../../../redux/slices/userSlice";
 import Title from "antd/es/typography/Title";
 import SForm from "../../../styledComponents/SForm";
 import {useNavigate} from "react-router-dom";
@@ -21,7 +21,7 @@ const LogIn = () => {
     const handleLoginUser = async (values) => {
         try {
             const userData = await signInWithEmailAndPassword(auth,values.email,values.password)
-            dispatch(setUser(userData.user.uid))
+            dispatch(setUserId(userData.user.uid))
         }
         catch (e){
             console.log(e)

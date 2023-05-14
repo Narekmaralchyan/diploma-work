@@ -1,32 +1,27 @@
 import {useDispatch, useSelector} from "react-redux";
-import {getAuth,signOut} from "firebase/auth";
-import {logoutUser} from "../../../redux/slices/userSlice";
-import {useEffect, useState} from "react";
-import getUserInfo from "../../../utils/getUserInfo.js";
-import {Layout, Skeleton} from "antd";
-import LeftMenu from "../../../components/leftMenu";
-import SLayout from "../../../styledComponents/SLayout";
-import {Header} from "antd/es/layout/layout";
-import Title from "antd/es/typography/Title";
-import Avatar from "antd/es/avatar/avatar";
-import SkeletonAvatar from "antd/es/skeleton/Avatar";
+import SProfilePage from "./SProfilePage";
+import ProfilePageHeader from "./components/profilePageHeader";
+import ProfilePageBody from "./components/profilePageBody";
+import {useEffect} from "react";
+import getUserInfo from "../../../utils/getUserInfo";
+import {setUserData} from "../../../redux/slices/userSlice";
 
 const ProfilePage = ()=>{
-    const userId = useSelector(state => state.user)
-    const [userData,setUserData] = useState(null)
+    const {userId} = useSelector(state => state.user)
     const dispatch = useDispatch()
 
     useEffect(()=>{
         getUserInfo(userId)
             .then(data=>{
-                setUserData(data)
+                dispatch(setUserData(data))
             })
-    },[])
+    },[userId])
 
     return(
-        <SLayout>
-                <h1>hello</h1>
-        </SLayout>
+        <SProfilePage>
+            <ProfilePageHeader />
+            <ProfilePageBody />
+        </SProfilePage>
     )
 }
 export default ProfilePage;

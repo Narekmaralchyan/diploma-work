@@ -4,7 +4,7 @@ import PublicRoutes from "./routes/publicRoutes";
 import {getAuth} from "firebase/auth";
 import PageLoading from "./components/pageLoading";
 import {useDispatch, useSelector} from "react-redux";
-import {setUser} from "./redux/slices/userSlice";
+import {setUserId} from "./redux/slices/userSlice";
 
 function App() {
     const dispatch= useDispatch()
@@ -14,7 +14,7 @@ function App() {
     useEffect(()=>{
         const id = localStorage.getItem('user')
         if(id){
-                dispatch(setUser(id))
+                dispatch(setUserId(id))
                 setStatus('logged')
             }
         else setStatus('logout')
