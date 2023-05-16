@@ -3,27 +3,31 @@ import {useDispatch, useSelector} from "react-redux";
 import {closeNewPostModal} from "../../redux/slices/modalSlice";
 import {Button, Form, Input, Upload} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
-import {useState} from "react";
 import {useForm} from "antd/es/form/Form";
+import useAddNewPost from "../../hooks/useAddNewPost";
+import toast from "../toast";
 
-const NewPostModal = ({open})=>{
+const NewPostModal = ()=>{
     const [form] = useForm()
     const { isOpenNewPostModal } = useSelector(state => state.modals)
     const dispatch = useDispatch()
-    const [file, setFile] = useState(null);
+    const {addNewPost,loading} = useAddNewPost()
 
     const handleCloseModal = () => {
+        form.resetFields(['photo','description'])
         dispatch(closeNewPostModal())
     }
-    const handleConfirmAddNewPost = () => {
-        console.log(form.getFieldsValue(['photo','description']))
-
+    const handleConfirmAddNewPost = async () => {
+        await form.validateFields(['photo','description'])
+        const post = form.getFieldsValue(['photo','description'])
+        await addNewPost(post)
+        handleCloseModal()
     }
     const handleChange = ({fileList})=>{
         if(fileList.length){
-            setFile(fileList[0])
+            form.setFieldValue('photo',fileList[0])
         }
-        else setFile(null)
+        else form.resetFields(['photo'])
     }
 
     return(
@@ -32,15 +36,19 @@ const NewPostModal = ({open})=>{
             onCancel={handleCloseModal}
             title={'Add new post'}
             onOk={handleConfirmAddNewPost}
+            confirmLoading={loading}
             centered
             // okButtonProps={{ disabled: !file }}
         >
-            <Form form={form}>
-                <Form.Item name='photo'>
+            <Form form={form} >
+                <Form.Item name='photo' rules={[{
+                    required:true,
+                    message:'Photo required'
+                }]}>
                     <Upload
                         listType={'picture-circle'}
                         maxCount={1}
-                        // onChange={handleChange}
+                        onChange={handleChange}
                     >
                         <Button icon={<UploadOutlined />} size={'small'} >Upload</Button>
                     </Upload>

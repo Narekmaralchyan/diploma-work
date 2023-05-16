@@ -13,8 +13,8 @@ const ProfilePageHeader = () => {
                     <div className='profileInfo'>
                         <h1>{userData.name} {userData.lastName}</h1>
                         <div className='profileFollows'>
-                            <p>{userData.follows || 0} follows</p>
-                            <p>{userData.followers || 0} followers</p>
+                            <p>{userData.follows.length || 0} follows</p>
+                            <p>{userData.followers.length || 0} followers</p>
                         </div>
                     </div>
                     </>

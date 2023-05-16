@@ -28,7 +28,11 @@ const SignUp = () => {
            name:values.name,
            lastName:values.lastName,
            email:values.email,
-           id:newUser.uid
+           id:newUser.uid,
+           avatarUrl:"",
+           posts:[],
+           follows:[],
+           followers:[]
        }
        await setDoc(docRef,userInfo)
 

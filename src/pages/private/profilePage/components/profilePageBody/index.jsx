@@ -2,6 +2,7 @@ import SProfilePageBody from "./SProfilePageBody";
 import {Button, Empty, Skeleton} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {openNewPostModal} from "../../../../../redux/slices/modalSlice";
+import ProfilePagePosts from "./profilePagePosts";
 
 const NoPostsBody = () => {
     const dispatch = useDispatch()
@@ -32,7 +33,7 @@ const ProfilePageBody = () => {
                 userData ?
                     userData?.posts?.length
                         ?
-                        <div>posts</div>
+                        <ProfilePagePosts posts={userData.posts}/>
                         :
                         <NoPostsBody />
                     :
