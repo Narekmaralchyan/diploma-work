@@ -5,7 +5,6 @@ import {Button, Form, Input, Upload} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
 import {useForm} from "antd/es/form/Form";
 import useAddNewPost from "../../hooks/useAddNewPost";
-import toast from "../toast";
 
 const NewPostModal = ()=>{
     const [form] = useForm()
@@ -38,7 +37,6 @@ const NewPostModal = ()=>{
             onOk={handleConfirmAddNewPost}
             confirmLoading={loading}
             centered
-            // okButtonProps={{ disabled: !file }}
         >
             <Form form={form} >
                 <Form.Item name='photo' rules={[{

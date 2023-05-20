@@ -1,20 +1,41 @@
 import SProfilePageHeader from "./SProfilePageHeader";
-import {Avatar, Skeleton} from "antd";
+import {Avatar, Button, Skeleton} from "antd";
 import { UserOutlined } from '@ant-design/icons';
+import {useEffect, useMemo, useState} from "react";
+import getUserInfo from "../../../../../utils/getUserInfo";
 import {useSelector} from "react-redux";
+import followUser from "../../../../../utils/followUser";
 
-const ProfilePageHeader = () => {
-    const {userData} = useSelector(state => state.user)
+const ProfilePageHeader = ({id}) => {
+    const { userId } = useSelector(state=>state.user)
+    const [data,setData] = useState(null)
+    const isMyProfile = useMemo(()=>id === userId,[id,userId])
+    const isFollow = useMemo(()=>data?.followers.includes(userId),[data])
+    useEffect(()=>{
+        if(id ){
+            getUserInfo(id)
+                .then(data=>{
+                    setData(data)
+                })
+        }
+    },[id])
+
+    const followUserToggle = ()=>{
+        followUser(isFollow,userId,data).then((newData)=>{
+            setData(newData)
+        })
+    }
     return(
         <SProfilePageHeader>
             {
-                userData ?<>
-                    <Avatar src={userData.avatarUrl} size={100} icon={<UserOutlined />} />
+                data ?<>
+                    <Avatar src={data?.avatarUrl} size={100} icon={<UserOutlined />}  />
                     <div className='profileInfo'>
-                        <h1>{userData.name} {userData.lastName}</h1>
+                        <h1>{data.name} {data.lastName}</h1>
                         <div className='profileFollows'>
-                            <p>{userData.follows.length || 0} follows</p>
-                            <p>{userData.followers.length || 0} followers</p>
+                            <p>{data.follows.length || 0} follows</p>
+                            <p>{data.followers.length || 0} followers</p>
+                            { !isMyProfile ? <Button onClick={followUserToggle}>{isFollow ? 'Unfollow' : "Follow"}</Button> : null}
                         </div>
                     </div>
                     </>

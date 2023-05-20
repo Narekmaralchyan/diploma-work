@@ -29,7 +29,7 @@ const SignUp = () => {
            lastName:values.lastName,
            email:values.email,
            id:newUser.uid,
-           avatarUrl:"",
+           avatarUrl:null,
            posts:[],
            follows:[],
            followers:[]

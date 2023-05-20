@@ -1,26 +1,14 @@
-import {useDispatch, useSelector} from "react-redux";
 import SProfilePage from "./SProfilePage";
 import ProfilePageHeader from "./components/profilePageHeader";
 import ProfilePageBody from "./components/profilePageBody";
-import {useEffect} from "react";
-import getUserInfo from "../../../utils/getUserInfo";
-import {setUserData} from "../../../redux/slices/userSlice";
+import {useParams} from "react-router-dom";
 
 const ProfilePage = ()=>{
-    const {userId} = useSelector(state => state.user)
-    const dispatch = useDispatch()
-
-    useEffect(()=>{
-        getUserInfo(userId)
-            .then(data=>{
-                dispatch(setUserData(data))
-            })
-    },[userId])
-
+    let { id } = useParams();
     return(
         <SProfilePage>
-            <ProfilePageHeader />
-            <ProfilePageBody />
+            <ProfilePageHeader id={id} />
+            <ProfilePageBody id={id} />
         </SProfilePage>
     )
 }

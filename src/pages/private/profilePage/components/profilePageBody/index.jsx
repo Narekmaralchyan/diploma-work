@@ -1,8 +1,10 @@
 import SProfilePageBody from "./SProfilePageBody";
 import {Button, Empty, Skeleton} from "antd";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {openNewPostModal} from "../../../../../redux/slices/modalSlice";
 import ProfilePagePosts from "./profilePagePosts";
+import getPosts from "../../../../../utils/getPosts";
+import {useEffect, useState} from "react";
 
 const NoPostsBody = () => {
     const dispatch = useDispatch()
@@ -24,16 +26,22 @@ const NoPostsBody = () => {
         </Empty>
     )
 }
-const ProfilePageBody = () => {
-    const {userData} = useSelector(state => state.user)
+const ProfilePageBody = ({id}) => {
+    const [posts,setPosts] = useState([])
+
+    useEffect(()=>{
+        getPosts(id).then(posts=>{
+            setPosts(posts)
+        })
+    },[])
 
     return(
         <SProfilePageBody>
             {
-                userData ?
-                    userData?.posts?.length
+                id ?
+                    posts.length
                         ?
-                        <ProfilePagePosts posts={userData.posts}/>
+                        <ProfilePagePosts posts={posts} />
                         :
                         <NoPostsBody />
                     :

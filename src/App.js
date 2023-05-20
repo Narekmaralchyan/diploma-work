@@ -1,24 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import PrivateRoutes from "./routes/privateRoutes";
 import PublicRoutes from "./routes/publicRoutes";
-import {getAuth} from "firebase/auth";
 import PageLoading from "./components/pageLoading";
 import {useDispatch, useSelector} from "react-redux";
-import {setUserId} from "./redux/slices/userSlice";
+import {setUserData, setUserId} from "./redux/slices/userSlice";
+import getUserInfo from "./utils/getUserInfo";
 
 function App() {
     const dispatch= useDispatch()
-    const user = useSelector(state=>state.user)
+    const {userId} = useSelector(state=>state.user)
     const [status,setStatus] = useState('loading')
 
     useEffect(()=>{
         const id = localStorage.getItem('user')
         if(id){
-                dispatch(setUserId(id))
+            dispatch(setUserId(id))
+            getUserInfo(id)
+                .then(userData=>{
+                    dispatch(setUserData(userData))
+                })
                 setStatus('logged')
             }
         else setStatus('logout')
-    },[user])
+    },[dispatch, userId])
 
 
     if(status === 'loading'){
