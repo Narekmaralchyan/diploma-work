@@ -1,12 +1,13 @@
 import SProfilePageBody from "./SProfilePageBody";
 import {Button, Empty, Skeleton} from "antd";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {openNewPostModal} from "../../../../../redux/slices/modalSlice";
 import ProfilePagePosts from "./profilePagePosts";
 import getPosts from "../../../../../utils/getPosts";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo} from "react";
+import {setPosts} from "../../../../../redux/slices/postsSlice";
 
-const NoPostsBody = () => {
+const NoPostsBody = ({isMyProfile}) => {
     const dispatch = useDispatch()
     const handleOpenModal = () => {
         dispatch(openNewPostModal())
@@ -22,28 +23,30 @@ const NoPostsBody = () => {
                     </span>
             }
         >
-            <Button onClick={handleOpenModal} type="primary">Create New Post</Button>
+            {isMyProfile && <Button onClick={handleOpenModal} type="primary">Create New Post</Button>}
         </Empty>
     )
 }
 const ProfilePageBody = ({id}) => {
-    const [posts,setPosts] = useState([])
-
+    const {userId} = useSelector(state=>state.user)
+    const posts = useSelector(state => state.posts)
+    const dispatch = useDispatch()
+    const isMyProfile = useMemo(()=>id === userId,[id,userId])
     useEffect(()=>{
         getPosts(id).then(posts=>{
-            setPosts(posts)
+            dispatch(setPosts(posts))
         })
-    },[])
+    },[id])
 
     return(
         <SProfilePageBody>
             {
                 id ?
-                    posts.length
+                    posts?.length
                         ?
                         <ProfilePagePosts posts={posts} />
                         :
-                        <NoPostsBody />
+                        <NoPostsBody isMyProfile={isMyProfile}/>
                     :
                     <Skeleton active />
             }

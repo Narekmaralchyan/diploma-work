@@ -6,6 +6,8 @@ import { setUserId} from "../../../redux/slices/userSlice";
 import Title from "antd/es/typography/Title";
 import SForm from "../../../styledComponents/SForm";
 import {useNavigate} from "react-router-dom";
+import SLogin from "./SLogin";
+import Globus from "./componets/Globus";
 
 const LogIn = () => {
     const auth = getAuth()
@@ -27,58 +29,61 @@ const LogIn = () => {
     }
 
     return(
-        <Layout style={{width:'100vw',height:'100vh',display:"flex",justifyContent:'center',alignItems:'center'}}>
-            <Title>LOGIN!</Title>
-                    <SForm
-                        form={form}
-                        name="basic"
-                        labelCol={{
-                            span: 8,
-                        }}
-                        wrapperCol={{
-                            span: 16,
-                        }}
-                        onFinish={handleLoginUser}
-                        autoComplete="off"
+        <SLogin>
+            <div className='loginContainer'>
+                <Title>LOGIN!</Title>
+                <SForm
+                    form={form}
+                    name="basic"
+                    labelCol={{
+                        span: 8,
+                    }}
+                    wrapperCol={{
+                        span: 16,
+                    }}
+                    onFinish={handleLoginUser}
+                    autoComplete="off"
+                >
+                    <Form.Item
+                        name='email'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your email!',
+                            },
+                            {
+                                type:"email",
+                                message:'Please input correct email address!'
+                            }
+                        ]}
                     >
-                        <Form.Item
-                            name='email'
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your email!',
-                                },
-                                {
-                                    type:"email",
-                                    message:'Please input correct email address!'
-                                }
-                            ]}
-                        >
-                            <Input placeholder={'email'}  />
-                        </Form.Item>
-                        <Form.Item
-                            name='password'
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your password!',
-                                },
-                            ]}
-                        >
-                            <Input.Password placeholder={'password'}/>
-                        </Form.Item>
-                        <Row justify={'space-between'}>
-                            <Col >
-                                <Form.Item>
-                                    <Button htmlType='submit' type='primary' onClick={handleLoginUser} >Log in</Button>
-                                </Form.Item>
-                            </Col>
-                            <Col >
-                                <Button onClick={navigateSignUp}>Sign Up</Button>
-                            </Col>
-                        </Row>
-                    </SForm>
-        </Layout>
+                        <Input placeholder={'email'}  />
+                    </Form.Item>
+                    <Form.Item
+                        name='password'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password!',
+                            },
+                        ]}
+                    >
+                        <Input.Password placeholder={'password'}/>
+                    </Form.Item>
+                    <Row justify={'space-between'}>
+                        <Col >
+                            <Form.Item>
+                                <Button htmlType='submit' type='primary' onClick={handleLoginUser} >Log in</Button>
+                            </Form.Item>
+                        </Col>
+                        <Col >
+                            <Button onClick={navigateSignUp}>Sign Up</Button>
+                        </Col>
+                    </Row>
+                </SForm>
+            </div>
+            <Globus />
+        </SLogin>
     )
 }
 

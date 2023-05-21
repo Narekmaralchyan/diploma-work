@@ -5,6 +5,8 @@ import LeftMenu from "../components/leftMenu";
 import NewPostModal from "../components/newPostModal";
 import Feed from "../pages/private/feed";
 import SearchModal from "../components/searchModal";
+import FollowingUsersModal from "../components/followingUsersModal";
+import Settings from "../pages/private/settings";
 
 const PrivateRoutes = ()=>{
     return(
@@ -13,9 +15,11 @@ const PrivateRoutes = ()=>{
                 <Routes>
                     <Route path={''} element={<Feed />} />
                     <Route path={'/:id'} element={<ProfilePage/>} />
+                    <Route path={'/settings'} element={<Settings />} />
                 </Routes>
             <NewPostModal/>
             <SearchModal />
+            <FollowingUsersModal />
         </SLayout>
     )
 }

@@ -7,8 +7,9 @@ const SProfilePage = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-  gap: 20px;
+    gap: 20px;
     padding-top: 10px;
+  overflow-y: scroll;
     
 `
 

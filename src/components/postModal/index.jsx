@@ -5,23 +5,25 @@ import Paragraph from "antd/es/typography/Paragraph";
 import {HeartFilled, UserOutlined} from "@ant-design/icons";
 import moment from "moment";
 import toast from "../toast";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { v4 as uuid } from 'uuid';
 import getUserInfo from "../../utils/getUserInfo";
 import PostComments from "../../pages/private/profilePage/components/postComments";
 import addComment from "../../utils/addComment";
 import likePost from "../../utils/likePost";
 import getPost from "../../utils/getPost";
+import deletePost from "../../utils/deletePost";
+import {removePost} from "../../redux/slices/postsSlice";
 
 const PostModal = ({postInfo,closeModal}) =>{
     const [post,setPost] = useState(null)
     const [authorData,setAuthorData] = useState(null)
     const {userData} = useSelector(state=>state.user)
     const [inputValue,setInputValue] = useState('')
-
+    const dispatch = useDispatch()
     const isLiked = useMemo(()=>{
         if(post && authorData){
-            if(post.likes.includes(authorData.id)){
+            if(post.likes.includes(userData?.id)){
                 return true
             }
             else return false
@@ -68,6 +70,15 @@ const PostModal = ({postInfo,closeModal}) =>{
         closeModal();
         setPost(null)
     }
+
+    const handleDeletePost = async () => {
+        if(post){
+            deletePost(post).then(()=>{
+                dispatch(removePost(post?.id))
+                handelCancelModal()
+            })
+        }
+    }
     return(
         <SPostModal
             open={postInfo}
@@ -102,8 +113,14 @@ const PostModal = ({postInfo,closeModal}) =>{
                </div>
            </div>
             <div className='likes'>
-                <HeartFilled style={{color:`${isLiked?'red':'white'}`,fontSize:'36px'}} onClick={handleLikePost}/>
-                {post?.likes?.length || 0} likes
+               <div className='likesInfo'>
+                   <HeartFilled style={{color:`${isLiked?'red':'white'}`,fontSize:'36px'}} onClick={handleLikePost}/>
+                   {post?.likes?.length || 0} likes
+               </div>
+                <div className='description'>
+                    <p>{post?.description}</p>
+                    {(post?.authorId === userData?.id) && <Button onClick={handleDeletePost}>Delete</Button>}
+                </div>
             </div>
         </SPostModal>
     )

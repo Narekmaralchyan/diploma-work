@@ -22,19 +22,38 @@ const SPostModal = styled(Modal)`
     flex-direction: column;
     gap: 5px;
     height: 100%;
-     .post {
-        width: 100%;
-       display: flex;
-       gap: 5px;
-       height: 90%;
-     }
+
+    .post {
+      width: 100%;
+      display: flex;
+      gap: 5px;
+      height: 90%;
+    }
+
     .likes {
       height: 10%;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 20px;
       font-size: 16px;
       color: white;
+
+      .likesInfo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 10px;
+        background-color: #170325;
+        padding: 5px 10px;
+      }
+      .description {
+        padding: 5px;
+        width: 80%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
     }
   }
 
@@ -43,7 +62,7 @@ const SPostModal = styled(Modal)`
   }
 
   .postInfo {
-    border: 1px solid white;
+    border: 1px solid #080657;
     border-radius: 5px;
     width: 40%;
     min-height: 100%;
@@ -57,7 +76,7 @@ const SPostModal = styled(Modal)`
       gap: 5px;
       align-items: center;
       height: 10%;
-  
+
       .ant-typography {
         margin-bottom: 0;
         display: flex;
@@ -81,14 +100,18 @@ const SPostModal = styled(Modal)`
         gap: 5px;
         height: 93%;
         overflow-y: scroll;
+        padding: 5px;
+      }
+
+      .commentsBlock::-webkit-scrollbar {
+        display: none;
       }
 
       .singleComment {
         color: white;
-        border: 1px solid grey;
         border-radius: 5px;
         padding: 2px;
-        background-color: #363535;
+        background-color: #170325;
 
         .commentAuthor {
           display: flex;
@@ -98,7 +121,6 @@ const SPostModal = styled(Modal)`
 
         .commentText {
           padding: 2px;
-          border: 1px solid #535353;
         }
       }
     }

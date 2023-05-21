@@ -21,12 +21,10 @@ const useSlice = createSlice({
         setUserData(state,action) {
             state.userData  = action.payload
         },
-        addPost(state,action) {
-            state.userData.posts = [action.payload,...(state.userData.posts || [])]
-        }
+
     }
 })
 
-export const {setUserId , logoutUser,setUserData,addPost} = useSlice.actions
+export const {setUserId , logoutUser,setUserData} = useSlice.actions
 
 export default useSlice.reducer

@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isOpenNewPostModal:false,
-    isOpenSearchModal:false
+    isOpenSearchModal:false,
+    isOpenFollowingUsersModal:false,
 }
 
 const modalSlice = createSlice({
@@ -20,10 +21,22 @@ const modalSlice = createSlice({
         },
         closeSearchModal(state){
             state.isOpenSearchModal = false
-        }
+        },
+        openFollowingUsersModal(state,action){
+            state.isOpenFollowingUsersModal = action.payload
+        },
+        closeFollowingUsersModal(state){
+            state.isOpenFollowingUsersModal = false
+        },
     }
 })
 
-export const {openNewPostModal ,closeNewPostModal,closeSearchModal,openSearchModal} = modalSlice.actions
+export const {openNewPostModal ,
+    closeNewPostModal,
+    closeSearchModal,
+    openSearchModal,
+    openFollowingUsersModal,
+    closeFollowingUsersModal
+} = modalSlice.actions
 
 export default modalSlice.reducer
